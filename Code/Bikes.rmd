@@ -1,0 +1,99 @@
+---
+title: "ANLY 506 Final Report"
+author: "Cemin Sunny (192524)"
+date: "April 24, 2019"
+output:
+  html_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr);library(ggplot2)
+BikeData <- read.csv("D:/R Working Directory/bikeVendors.csv", header=TRUE, sep=",")
+```
+
+### Some of the question this analysis will help to answer
+#### What are the types of bikes in this data?
+#### What are these bikes used for?
+#### How each type of bike used for? 
+#### What is the price range for these bikes?
+#### What type of frames do these bikes have?
+#### Do the frames have a correlation with price? 
+
+
+```
+
+## Data Exploration.
+###Two types of Bikes are Mountain and Road.
+```{r warning=FALSE, message=FALSE}
+
+plot(BikeData$category1)
+```
+
+#### These bikes are used for Trail, Elite Road, Sport, Cross Country race, Fat Bike, Trail, Over Mountain, Triathalon, Cyclocross,and Endurance Road.
+```{r warning=FALSE, message=FALSE}
+plot(BikeData$category2)
+```
+
+#### Road bikes are used for Elite Road, Triathalon, Cyclocross,and Endurance Road.
+```{r warning=FALSE, message=FALSE}
+CTRoad <- filter(BikeData, category1 == "Road")
+plot(CTRoad$category2)
+```
+
+#### Mountain bikes are used for Trail, Sport, Cross Country Race, Fat Bike, Cross Country Race, Sport,and Over Mountain. 
+```{r warning=FALSE, message=FALSE}
+CTMountain <- filter(BikeData, category1 == "Mountain")
+plot(CTMountain$category2)
+```
+
+## Data Analysis.
+### Expensive and economical bikes.
+####Bikes that are priced over $5000 has been categorized as expensive and below $5000 as economical.Expensive and economical has both mountain and road bikes.
+```{r warning=FALSE, message=FALSE}
+Expensive <- filter(BikeData, price >= 5000)
+
+Economical <- filter(BikeData, price <= 5000)
+```
+
+#### Most of the expensive bikes are made of carbon frame.
+
+```{r warning=FALSE, message=FALSE}
+plot(Expensive$frame)
+```
+
+#### Most of the aluminum frame bikes are economical.
+```{r warning=FALSE, message=FALSE}
+Aluminumframe <- filter(BikeData, frame == "Aluminum")
+plot(Aluminumframe$price)
+````
+
+#### However,economical bikes does have both aluminum and carbon frame bikes.Not all carbon frame bikes are expensive.
+
+```{r warning=FALSE, message=FALSE}
+
+plot(Economical$frame)
+Carbonframe <- filter(BikeData, frame == "Carbon")
+
+plot(Carbonframe$price)
+
+```
+
+### Triathalon bikes.
+#### Triathalon bikes are not expensive.However, all triathalon bikes are made of carbon.   
+```{r warning=FALSE, message=FALSE}
+Triathalon <- filter(BikeData, category2 == "Triathalon")
+```{r warning=FALSE, message=FALSE}
+plot(Triathalon$price)
+plot(Triathalon$frame)
+```
+
+### Endurance Road Bikes.
+#### Endurance road bikes has both carbon and aluminum frame, 
+```{r warning=FALSE, message=FALSE}
+EnduranceRoadBike <- filter(BikeData, category2 == "Endurance Road")
+
+plot(EnduranceRoadBike$frame)
+```
+
